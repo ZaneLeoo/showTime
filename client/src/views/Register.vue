@@ -20,12 +20,12 @@
     <!-- 右侧表单区 -->
     <div class="flex-1 flex items-center justify-center px-6 py-12">
       <div class="w-full max-w-sm">
-        <h1 class="text-2xl font-bold text-surface-dark mb-2">创建账号</h1>
-        <p class="text-surface-muted mb-8">注册 ShowTime，开启购票之旅</p>
+        <h1 class="text-2xl font-bold text-[#2D3436] mb-2">创建账号</h1>
+        <p class="text-[#636E72] mb-8">注册 ShowTime，开启购票之旅</p>
 
         <form @submit.prevent="handleRegister" class="space-y-5">
           <div>
-            <label class="block text-sm font-medium text-surface-dark mb-2">手机号 *</label>
+            <label class="block text-sm font-medium text-[#2D3436] mb-2">手机号 *</label>
             <input
               v-model="form.phone"
               type="text"
@@ -36,7 +36,7 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-surface-dark mb-2">密码 *</label>
+            <label class="block text-sm font-medium text-[#2D3436] mb-2">密码 *</label>
             <input
               v-model="form.password"
               type="password"
@@ -46,7 +46,7 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-surface-dark mb-2">昵称</label>
+            <label class="block text-sm font-medium text-[#2D3436] mb-2">昵称</label>
             <input
               v-model="form.nickname"
               type="text"
@@ -56,7 +56,7 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-surface-dark mb-2">邮箱</label>
+            <label class="block text-sm font-medium text-[#2D3436] mb-2">邮箱</label>
             <input
               v-model="form.email"
               type="email"
@@ -78,7 +78,7 @@
           </button>
         </form>
 
-        <p class="mt-8 text-center text-sm text-surface-muted">
+        <p class="mt-8 text-center text-sm text-[#636E72]">
           已有账号？
           <router-link to="/login" class="text-primary-500 font-medium hover:text-primary-600 transition-colors">
             立即登录

@@ -6,10 +6,10 @@
         v-for="cat in categories"
         :key="cat.id"
         @click="activeCategory = cat.id"
-        class="px-5 py-2 rounded-pill text-sm font-medium transition-all duration-200"
-        :class="activeCategory === cat.id
-          ? 'bg-primary-500 text-white shadow-lg shadow-primary-200'
-          : 'bg-white text-surface-muted hover:text-surface-dark hover:bg-surface-light border border-surface-border'"
+        :style="activeCategory === cat.id
+          ? 'background: #FF6B6B; color: #fff; box-shadow: 0 4px 12px rgba(255,107,107,0.3);'
+          : 'background: #fff; color: #636E72; border: 1px solid #E8ECF0;'"
+        class="px-5 py-2 rounded-pill text-sm font-medium transition-all duration-200 hover:-translate-y-0.5"
       >
         {{ cat.name }}
       </button>
@@ -17,10 +17,10 @@
 
     <!-- 热门推荐标题 -->
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-xl font-bold text-surface-dark">
+      <h2 style="font-size: 20px; font-weight: 700; color: #2D3436;">
         {{ activeCategoryLabel }} 热门推荐
       </h2>
-      <span class="text-sm text-surface-muted">{{ events.length }} 个演出</span>
+      <span style="color: #636E72; font-size: 14px;">{{ events.length }} 个演出</span>
     </div>
 
     <!-- 演出卡片网格 -->
@@ -31,7 +31,7 @@
         class="card cursor-pointer group"
       >
         <!-- 海报 -->
-        <div class="relative aspect-[3/4] rounded-t-card overflow-hidden bg-surface-light">
+        <div class="relative aspect-[3/4] rounded-t-card overflow-hidden" style="background-color: #F7F9FC;">
           <img
             :src="event.posterUrl"
             :alt="event.title"
@@ -39,24 +39,26 @@
           />
           <!-- 状态标签 -->
           <span
-            class="absolute top-3 left-3 px-3 py-1 rounded-pill text-xs font-medium"
-            :class="statusClass(event.status)"
+            class="absolute top-3 left-3 px-3 py-1 rounded-pill text-xs font-medium text-white"
+            :style="{ backgroundColor: statusColor(event.status) }"
           >
             {{ statusText(event.status) }}
           </span>
           <!-- 票价浮层 -->
-          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-            <span class="text-white font-bold text-lg">¥{{ event.minPrice }}<span class="text-sm font-normal text-white/70"> 起</span></span>
+          <div class="absolute bottom-0 inset-x-0 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);">
+            <span style="color: #fff; font-size: 18px; font-weight: 700;">
+              ¥{{ event.minPrice }}<span style="font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.7);"> 起</span>
+            </span>
           </div>
         </div>
 
         <!-- 信息 -->
         <div class="p-4">
-          <h3 class="font-semibold text-surface-dark line-clamp-2 leading-snug mb-2">
+          <h3 style="font-weight: 600; color: #2D3436; line-height: 1.4;" class="line-clamp-2 mb-2">
             {{ event.title }}
           </h3>
-          <p class="text-sm text-surface-muted mb-1">{{ event.venueName }} · {{ event.city }}</p>
-          <p class="text-xs text-surface-muted">{{ event.earliestTime }}</p>
+          <p style="color: #636E72; font-size: 14px; margin-bottom: 2px;">{{ event.venueName }} · {{ event.city }}</p>
+          <p style="color: #636E72; font-size: 12px;">{{ event.earliestTime }}</p>
         </div>
       </article>
     </div>
@@ -64,7 +66,7 @@
     <!-- 空状态 -->
     <div v-if="events.length === 0" class="text-center py-20">
       <div class="text-5xl mb-4">🎬</div>
-      <p class="text-surface-muted">暂无演出</p>
+      <p style="color: #636E72;">暂无演出</p>
     </div>
   </div>
 </template>
@@ -93,12 +95,12 @@ const activeCategoryLabel = computed(() => {
   return cat ? cat.name : '全部'
 })
 
-const statusClass = (s: number) => {
+const statusColor = (s: number) => {
   switch (s) {
-    case 1: return 'bg-mint-400 text-white'
-    case 2: return 'bg-surface-muted text-white'
-    case 3: return 'bg-surface-muted/80 text-white'
-    default: return 'bg-primary-400 text-white'
+    case 1: return '#4ECDC4'
+    case 2: return '#636E72'
+    case 3: return '#999'
+    default: return '#FF6B6B'
   }
 }
 const statusText = (s: number) => {

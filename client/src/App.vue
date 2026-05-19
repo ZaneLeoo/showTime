@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-surface-light">
+  <div style="background-color: #F7F9FC; min-height: 100vh;">
     <!-- 顶部导航栏 -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-nav">
+    <header style="position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(0,0,0,0.05);">
       <div class="page-container">
         <div class="flex items-center justify-between h-16">
           <!-- Logo -->
@@ -11,20 +11,20 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
               </svg>
             </div>
-            <span class="text-xl font-bold text-surface-dark">ShowTime</span>
+            <span style="font-size: 20px; font-weight: 700; color: #2D3436;">ShowTime</span>
           </router-link>
 
           <!-- 搜索框 -->
           <div class="hidden md:flex flex-1 max-w-md mx-8">
             <div class="relative w-full">
-              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style="color: #636E72;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
                 type="text"
                 v-model="searchKeyword"
                 placeholder="搜索演出、场馆..."
-                class="w-full rounded-pill border border-surface-border bg-surface-light/60 pl-11 pr-5 py-2.5 text-sm text-surface-dark placeholder-surface-muted focus:border-primary-400 focus:ring-4 focus:ring-primary-100 transition-all duration-200"
+                class="input-field !rounded-pill !py-2.5 !pl-11 !pr-5 text-sm"
                 @keyup.enter="doSearch"
               />
             </div>
@@ -33,7 +33,7 @@
           <!-- 右侧操作 -->
           <div class="flex items-center gap-3">
             <template v-if="auth.isLoggedIn()">
-              <router-link to="/user/orders" class="text-sm text-surface-muted hover:text-surface-dark transition-colors">
+              <router-link to="/user/orders" class="text-sm" style="color: #636E72;">
                 我的票夹
               </router-link>
               <div class="flex items-center gap-2 cursor-pointer" @click="auth.logout()">

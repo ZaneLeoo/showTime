@@ -36,7 +36,7 @@ export default {
           card:  '#FFFFFF',
           dark:  '#2D3436',   // 深灰黑文字
           muted: '#636E72',   // 次要灰色
-          border:'#E8ECF0',
+          line:  '#E8ECF0',   // 边框
         },
       },
       fontFamily: {
