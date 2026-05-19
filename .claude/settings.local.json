@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth:*)",
+      "Bash(curl -s --max-time 2 http://127.0.0.1:7890)",
+      "Bash(netstat -ano)"
+    ]
+  }
+}
