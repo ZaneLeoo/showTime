@@ -1,7 +1,7 @@
 # ShowTime 项目进度
 
-> 最后更新时间：2026/05/18
-> 当前阶段：初始化完成，准备开发
+> 最后更新时间：2026/05/19
+> 当前阶段：数据层完成，准备编写业务代码
 
 ## 项目背景
 
@@ -34,6 +34,8 @@
 | 前端骨架 | ✅ 完成 |
 | 后端开发规范 | ✅ 完成 |
 | 前端开发规范 | ✅ 完成 |
+| 实体类（12张表） | ✅ 完成 |
+| Mapper 接口（12个） | ✅ 完成 |
 
 ---
 
@@ -57,8 +59,8 @@ MySQL-p/
 │       ├── config/   (MyBatisPlusConfig)
 │       ├── controller/
 │       ├── service/
-│       ├── mapper/
-│       ├── entity/
+│       ├── mapper/   (CategoryMapper, EventMapper, SeatMapper 等12个)
+│       ├── entity/   (Category, Event, Seat, Order 等12个)
 │       ├── dto/
 │       └── vo/
 └── client/                         # Vue 3 前端
@@ -78,6 +80,6 @@ MySQL-p/
 ## 下一步计划
 
 1. 用户执行 `sql/init.sql` 建库建表
-2. 编写实体类（MyBatis-Plus 代码生成 或 手写）
-3. 实现用户模块（注册/登录）
-4. 实现演出模块（列表/搜索/详情）
+2. 编写 DTO 类（登录请求、注册请求、演出搜索条件等）
+3. 实现用户模块 Service + Controller（注册/登录）
+4. 实现演出模块 Service + Controller（列表/搜索/详情）
