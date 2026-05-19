@@ -1,7 +1,9 @@
 <template>
-  <div class="min-h-[calc(100vh-64px)] flex">
-    <!-- 左侧装饰区 -->
-    <div class="hidden lg:flex w-5/12 bg-gradient-to-br from-primary-400 via-primary-500 to-mint-400 items-center justify-center relative overflow-hidden">
+  <div class="min-h-[calc(100vh-64px)] flex relative"
+       style="background: url('/img/login&register_image.png') center/cover no-repeat;">
+    <!-- 左侧叠加层 -->
+    <div class="hidden lg:flex w-5/12 items-center justify-center relative overflow-hidden"
+         style="background: linear-gradient(135deg, rgba(255,107,107,0.85), rgba(78,205,196,0.8)); backdrop-filter: blur(0.5px);">
       <div class="absolute inset-0 opacity-10">
         <div class="absolute top-20 left-10 w-60 h-60 rounded-full bg-white" />
         <div class="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-white" />
@@ -18,18 +20,8 @@
     </div>
 
     <!-- 右侧表单区 -->
-    <div class="flex-1 flex items-center justify-center px-6 py-12 relative overflow-hidden"
-         style="background:
-           radial-gradient(ellipse 400px 500px at 80% 0%, rgba(255, 107, 107, 0.06), transparent),
-           radial-gradient(ellipse 300px 400px at 20% 100%, rgba(78, 205, 196, 0.05), transparent),
-           linear-gradient(135deg, rgba(247, 249, 252, 0.9), rgba(255, 255, 255, 1));">
-      <!-- 装饰光斑 -->
-      <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full opacity-20"
-           style="background: radial-gradient(circle, rgba(255,107,107,0.3), transparent);" />
-      <div class="absolute -bottom-16 -left-16 w-48 h-48 rounded-full opacity-15"
-           style="background: radial-gradient(circle, rgba(78,205,196,0.3), transparent);" />
-
-      <div class="relative z-10 w-full max-w-sm">
+    <div class="flex-1 flex items-center justify-center px-6 py-12">
+      <div class="w-full max-w-sm bg-white/90 backdrop-blur-xl rounded-card shadow-lg p-8">
         <h1 class="text-2xl font-bold text-[#2D3436] mb-2">欢迎回来</h1>
         <p class="text-[#636E72] mb-8">登录你的 ShowTime 账号</p>
 
