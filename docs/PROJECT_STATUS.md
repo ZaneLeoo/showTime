@@ -1,7 +1,7 @@
 # ShowTime 项目进度
 
 > 最后更新时间：2026/05/19
-> 当前阶段：数据层完成，准备编写业务代码
+> 当前阶段：用户模块完成，明亮浅色主题上线
 
 ## 项目背景
 
@@ -29,13 +29,16 @@
 |------|------|
 | 需求文档 | ✅ 完成 |
 | 参考方案（DDL） | ✅ 完成 |
-| 建库建表（无索引版） | ⏳ 用户自行执行 |
+| 建库建表（无索引版） | ✅ 完成 |
 | 后端骨架 | ✅ 完成 |
 | 前端骨架 | ✅ 完成 |
 | 后端开发规范 | ✅ 完成 |
 | 前端开发规范 | ✅ 完成 |
 | 实体类（12张表） | ✅ 完成 |
 | Mapper 接口（12个） | ✅ 完成 |
+| 用户模块（后端） | ✅ 完成 |
+| 用户模块（前端） | ✅ 完成 |
+| 全局主题（明亮浅色） | ✅ 完成 |
 
 ---
 
@@ -57,12 +60,12 @@ MySQL-p/
 │   └── src/main/java/com/showtime/
 │       ├── common/   (Result, ResultCode, PageResult, BizException, Handler)
 │       ├── config/   (MyBatisPlusConfig)
-│       ├── controller/
-│       ├── service/
+│       ├── controller/ (UserController)
+│       ├── service/    (UserService, SessionService)
 │       ├── mapper/   (CategoryMapper, EventMapper, SeatMapper 等12个)
 │       ├── entity/   (Category, Event, Seat, Order 等12个)
-│       ├── dto/
-│       └── vo/
+│       ├── dto/      (LoginRequest, RegisterRequest 等)
+│       └── vo/       (UserInfoVO)
 └── client/                         # Vue 3 前端
     ├── package.json
     ├── vite.config.ts
@@ -71,15 +74,15 @@ MySQL-p/
         ├── router/  (index.ts)
         ├── stores/  (auth.ts)
         ├── types/   (common.ts)
-        ├── views/   (8个占位页面)
-        └── styles/  (main.css + Tailwind)
+        ├── views/   (Home/Login/Register已完成, 其余占位)
+        └── styles/  (main.css + Tailwind 明亮浅色主题)
 ```
 
 ---
 
 ## 下一步计划
 
-1. 用户执行 `sql/init.sql` 建库建表
-2. 编写 DTO 类（登录请求、注册请求、演出搜索条件等）
-3. 实现用户模块 Service + Controller（注册/登录）
-4. 实现演出模块 Service + Controller（列表/搜索/详情）
+1. 实现演出模块 Service + Controller（列表/搜索/详情）
+2. 完善首页（搜索联动、分页、骨架屏）
+3. 实现选座模块（座位查询/锁定/释放）
+4. 实现订单模块（下单/支付/票夹）
