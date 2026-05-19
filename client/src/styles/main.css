@@ -7,6 +7,27 @@
 @layer base {
   body {
     background-color: #F7F9FC;
+    background-image:
+      /* 右上角装饰光斑 */
+      radial-gradient(ellipse 600px 500px at 90% 0%, rgba(255, 107, 107, 0.06), transparent),
+      /* 左下角装饰光斑 */
+      radial-gradient(ellipse 500px 400px at 10% 100%, rgba(78, 205, 196, 0.05), transparent),
+      /* 中点纹理 */
+      radial-gradient(ellipse 400px 350px at 60% 50%, rgba(255, 107, 107, 0.03), transparent),
+      /* 微妙点阵 */
+      radial-gradient(circle at 20% 20%, rgba(45, 52, 54, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 80% 40%, rgba(45, 52, 54, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 40% 70%, rgba(45, 52, 54, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 70% 85%, rgba(45, 52, 54, 0.03) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      40px 40px,
+      48px 48px,
+      44px 44px,
+      52px 52px;
+    background-attachment: fixed;
     color: #2D3436;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

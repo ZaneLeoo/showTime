@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #F7F9FC; min-height: 100vh;">
+  <div class="min-h-screen">
     <!-- 顶部导航栏 -->
     <header style="position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(0,0,0,0.05);">
       <div class="page-container">

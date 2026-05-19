@@ -18,8 +18,18 @@
     </div>
 
     <!-- 右侧表单区 -->
-    <div class="flex-1 flex items-center justify-center px-6 py-12">
-      <div class="w-full max-w-sm">
+    <div class="flex-1 flex items-center justify-center px-6 py-12 relative overflow-hidden"
+         style="background:
+           radial-gradient(ellipse 400px 500px at 20% 0%, rgba(78, 205, 196, 0.06), transparent),
+           radial-gradient(ellipse 300px 400px at 80% 100%, rgba(255, 107, 107, 0.05), transparent),
+           linear-gradient(135deg, rgba(247, 249, 252, 0.9), rgba(255, 255, 255, 1));">
+      <!-- 装饰光斑 -->
+      <div class="absolute -top-20 -left-20 w-64 h-64 rounded-full opacity-20"
+           style="background: radial-gradient(circle, rgba(78,205,196,0.3), transparent);" />
+      <div class="absolute -bottom-16 -right-16 w-48 h-48 rounded-full opacity-15"
+           style="background: radial-gradient(circle, rgba(255,107,107,0.3), transparent);" />
+
+      <div class="relative z-10 w-full max-w-sm">
         <h1 class="text-2xl font-bold text-[#2D3436] mb-2">创建账号</h1>
         <p class="text-[#636E72] mb-8">注册 ShowTime，开启购票之旅</p>
 
