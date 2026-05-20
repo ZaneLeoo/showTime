@@ -90,7 +90,7 @@ const totalPrice = computed(() => seats.value.reduce((s, seat) => s + seat.price
 
 const eventInfo = ref({
   title: '周杰伦2026巡回演唱会·北京站',
-  posterUrl: '',
+  posterUrl: '/img/concertImage/5e953e3f51aa65c5d81cbb542a790ac0.jpg',
   sessionTime: '2026-06-20 19:30',
   venueName: '鸟巢文化中心',
 })

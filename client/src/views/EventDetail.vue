@@ -194,7 +194,7 @@ function getMockDetail(id: number): EventDetailType {
     id,
     title: '周杰伦2026巡回演唱会·北京站',
     description: '华语乐坛天王周杰伦2026年巡回演唱会北京站重磅来袭！经典曲目全新编曲，震撼舞台效果，带你重温那些年我们一起听过的周杰伦。',
-    posterUrl: '',
+    posterUrl: '/img/concertImage/48a6b04e28d7509a9f938ee0149d9676.jpg',
     duration: 150,
     categoryId: 1,
     categoryName: '演唱会',

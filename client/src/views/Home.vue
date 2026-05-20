@@ -152,6 +152,17 @@ async function fetchList() {
   }
 }
 
+const concertImages = [
+  '/img/concertImage/48a6b04e28d7509a9f938ee0149d9676.jpg',
+  '/img/concertImage/49ddbd6e03f4c40a2367b9c1e42e6550.jpg',
+  '/img/concertImage/528a20ac75b692ca7df3e05ff8fe558d.jpg',
+  '/img/concertImage/5e953e3f51aa65c5d81cbb542a790ac0.jpg',
+  '/img/concertImage/8721a6ac9ed1919cdb9488a7736605e8.jpg',
+  '/img/concertImage/99b34ff56833d032f32d0d220153db97.jpg',
+  '/img/concertImage/ae4fdcefe55ae371e0e4f3a71bc49821.jpg',
+  '/img/concertImage/ebd8fc35b20cdcfe1859d0cade81a158.jpg',
+]
+
 function getMockEvents(): EventCardType[] {
   const cities = ['北京', '上海', '广州', '深圳', '成都', '杭州']
   const venues = ['鸟巢文化中心', '梅赛德斯-奔驰文化中心', '星海音乐厅', '深圳湾体育中心', '成都大魔方', '杭州大剧院']
@@ -170,7 +181,7 @@ function getMockEvents(): EventCardType[] {
   return Array.from({ length: 12 }, (_, i) => ({
     id: i + 1,
     title: titles[i % titles.length],
-    posterUrl: '',
+    posterUrl: concertImages[i % concertImages.length],
     categoryName: catNames[i % catNames.length],
     venueName: venues[i % venues.length],
     city: cities[i % cities.length],
