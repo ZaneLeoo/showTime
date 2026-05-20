@@ -41,16 +41,54 @@
           <div class="w-px h-6 bg-white/[0.08] shrink-0"></div>
 
           <!-- 排序 -->
-          <select
-            v-model="sortBy"
-            class="shrink-0 bg-white/[0.03] border border-white/[0.05] rounded-lg px-3 py-2 text-sm text-white/60
-                   focus:outline-none focus:border-brand-400/30 cursor-pointer"
-          >
-            <option value="recommend">推荐</option>
-            <option value="hot">热度</option>
-            <option value="time">时间</option>
-            <option value="price">价格</option>
-          </select>
+          <Listbox v-model="sortBy" as="div" class="relative shrink-0">
+            <ListboxButton
+              class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm
+                     bg-white/[0.03] border border-white/[0.05] text-white/60
+                     hover:text-white/80 hover:border-white/10
+                     transition-all duration-200 cursor-pointer"
+            >
+              {{ sortLabel }}
+              <svg
+                class="w-3 h-3 transition-transform duration-200 ui-open:rotate-180"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </ListboxButton>
+
+            <transition
+              leave-active-class="transition duration-100 ease-in"
+              leave-from-class="opacity-100 scale-100"
+              leave-to-class="opacity-0 scale-95"
+            >
+              <ListboxOptions
+                class="absolute top-full right-0 mt-1.5 w-28
+                       rounded-xl border border-white/[0.08]
+                       bg-surface-800/95 backdrop-blur-xl
+                       shadow-[0_12px_40px_rgba(0,0,0,0.5)]
+                       py-1 z-50 overflow-hidden focus:outline-none"
+              >
+                <ListboxOption
+                  v-for="opt in sortOptions"
+                  :key="opt.value"
+                  :value="opt.value"
+                  v-slot="{ active, selected }"
+                >
+                  <li
+                    :class="[
+                      'px-4 py-2.5 text-sm transition-colors duration-150 cursor-pointer',
+                      active || selected
+                        ? 'text-brand-400 bg-brand-500/10'
+                        : 'text-white/55 hover:text-white/85 hover:bg-white/[0.04]'
+                    ]"
+                  >
+                    {{ opt.label }}
+                  </li>
+                </ListboxOption>
+              </ListboxOptions>
+            </transition>
+          </Listbox>
         </div>
       </div>
     </section>
@@ -99,13 +137,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
+import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
 import { getEventList } from '@/api/event'
 import type { EventCard as EventCardType, Category } from '@/types/common'
 import EventCard from '@/components/EventCard.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import EmptyState from '@/components/EmptyState.vue'
-import { get } from '@/api/request'
 
 const list = ref<EventCardType[]>([])
 const loading = ref(false)
@@ -114,6 +152,15 @@ const pageSize = 20
 const total = ref(0)
 const activeCategory = ref<number | null>(null)
 const sortBy = ref('recommend')
+const sortOptions = [
+  { value: 'recommend', label: '推荐' },
+  { value: 'hot', label: '热度' },
+  { value: 'time', label: '时间' },
+  { value: 'price', label: '价格' },
+]
+const sortLabel = computed(() =>
+  sortOptions.find(o => o.value === sortBy.value)?.label || '推荐'
+)
 
 // 模拟分类数据（后续从接口获取）
 const categories = ref<Category[]>([
