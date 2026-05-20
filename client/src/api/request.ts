@@ -1,14 +1,13 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import type { Result } from '@/types/common'
 
-const instance: AxiosInstance = axios.create({
+const http = axios.create({
   baseURL: '/api',
-  timeout: 10000,
+  timeout: 15000,
 })
 
-// 请求拦截器 — 携带 token
-instance.interceptors.request.use((config) => {
+// 请求拦截 — 自动带 token
+http.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
@@ -16,46 +15,37 @@ instance.interceptors.request.use((config) => {
   return config
 })
 
-// 响应拦截器 — 统一处理错误
-instance.interceptors.response.use(
+// 响应拦截 — 解包 Result
+http.interceptors.response.use(
   (response) => {
-    const result: Result = response.data
-    if (result.code !== 200) {
-      // 未登录 → 跳转登录页
-      if (result.code === 4001) {
-        localStorage.removeItem('token')
-        window.location.href = '/login'
-      }
-      return Promise.reject(new Error(result.message || '请求失败'))
+    const res = response.data as Result<unknown>
+    if (res.code === 200) {
+      return res.data as any
     }
-    return response
+    if (res.code === 4001) {
+      localStorage.removeItem('token')
+      window.location.href = '/login'
+    }
+    return Promise.reject(new Error(res.message || '请求失败'))
   },
   (error) => {
-    return Promise.reject(error)
+    const msg = error.response?.data?.message || error.message || '网络异常'
+    return Promise.reject(new Error(msg))
   },
 )
 
-/**
- * 封装请求方法，返回 Result.data 的类型
- */
-export async function get<T>(url: string, params?: any): Promise<T> {
-  const res = await instance.get<Result<T>>(url, { params })
-  return res.data.data
+export function get<T>(url: string, params?: any): Promise<T> {
+  return http.get(url, { params }) as any
 }
 
-export async function post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-  const res = await instance.post<Result<T>>(url, data, config)
-  return res.data.data
+export function post<T>(url: string, data?: any, config?: any): Promise<T> {
+  return http.post(url, data, config) as any
 }
 
-export async function put<T>(url: string, data?: any): Promise<T> {
-  const res = await instance.put<Result<T>>(url, data)
-  return res.data.data
+export function put<T>(url: string, data?: any): Promise<T> {
+  return http.put(url, data) as any
 }
 
-export async function del<T>(url: string): Promise<T> {
-  const res = await instance.delete<Result<T>>(url)
-  return res.data.data
+export function del<T>(url: string): Promise<T> {
+  return http.delete(url) as any
 }
-
-export default instance

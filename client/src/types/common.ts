@@ -1,13 +1,11 @@
 // ==================== 通用类型 ====================
 
-/** 后端统一返回结构 */
-export interface Result<T = any> {
+export interface Result<T> {
   code: number
   message: string
   data: T
 }
 
-/** 分页数据 */
 export interface PageData<T> {
   records: T[]
   total: number
@@ -34,12 +32,27 @@ export interface RegisterReq {
   nickname?: string
 }
 
+export interface UpdateProfileReq {
+  nickname?: string
+  email?: string
+  avatarUrl?: string
+}
+
 export interface UserInfo {
   id: number
   phone: string
   email?: string
   nickname?: string
   avatarUrl?: string
+}
+
+// ==================== 分类相关 ====================
+
+export interface Category {
+  id: number
+  name: string
+  parentId: number | null
+  sortOrder: number
 }
 
 // ==================== 演出相关 ====================
@@ -51,9 +64,9 @@ export interface EventCard {
   categoryName: string
   venueName: string
   city: string
-  status: number        // 0=即将开售 1=在售 2=售罄 3=已结束
+  status: number          // 0=即将开售 1=在售中 2=已售罄 3=已结束
   minPrice: number
-  earliestTime: string
+  earliestSessionTime: string
 }
 
 export interface EventDetail {
@@ -62,28 +75,31 @@ export interface EventDetail {
   description: string
   posterUrl: string
   duration: number
+  categoryId: number
   categoryName: string
-  venue: {
-    id: number
-    name: string
-    city: string
-    address: string
-  }
-  sessions: SessionItem[]
+  venue: VenueInfo
+  sessions: SessionInfo[]
 }
 
-export interface SessionItem {
+export interface VenueInfo {
+  id: number
+  name: string
+  city: string
+  address: string
+}
+
+export interface SessionInfo {
   id: number
   sessionTime: string
-  status: number        // 0=取消 1=正常 2=已结束
+  status: number
   zones: ZoneInfo[]
 }
 
 export interface ZoneInfo {
-  zoneName: string      // VIP / A / B / C
+  name: string
   price: number
-  availableCount: number
-  totalCount: number
+  totalSeats: number
+  availableSeats: number
 }
 
 // ==================== 座位相关 ====================
@@ -94,28 +110,66 @@ export interface SeatInfo {
   seatRow: string
   seatCol: number
   price: number
-  status: 'available' | 'locked' | 'sold'
+  status: 'available' | 'sold' | 'locked' | 'selected'
+}
+
+export interface SeatZone {
+  name: string
+  price: number
+  color: string
+  seats: SeatInfo[]
 }
 
 // ==================== 订单相关 ====================
 
-export interface OrderInfo {
+export interface OrderCard {
   id: number
   orderNo: string
-  status: 'pending' | 'paid' | 'cancelled' | 'expired'
+  eventTitle: string
+  posterUrl: string
+  sessionTime: string
   totalAmount: number
   ticketCount: number
+  status: string         // pending / paid / cancelled
   createdAt: string
+}
+
+export interface OrderDetail {
+  id: number
+  orderNo: string
+  status: string
+  totalAmount: number
+  ticketCount: number
+  paidAt: string | null
+  cancelledAt: string | null
+  createdAt: string
+  event: {
+    id: number
+    title: string
+    posterUrl: string
+    venueName: string
+    sessionTime: string
+  }
   tickets: TicketInfo[]
+  payment: PaymentInfo | null
 }
 
 export interface TicketInfo {
-  seatId: number
   zoneName: string
   seatRow: string
   seatCol: number
   price: number
-  eventTitle: string
-  sessionTime: string
-  venueName: string
+}
+
+export interface PaymentInfo {
+  payMethod: string
+  amount: number
+  status: string
+  tradeNo: string
+  paidAt: string | null
+}
+
+export interface CreateOrderReq {
+  sessionId: number
+  seatIds: number[]
 }

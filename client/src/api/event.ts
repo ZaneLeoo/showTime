@@ -1,11 +1,12 @@
-import { get } from './request'
-import type { EventCard, EventDetail, PageData } from '@/types/common'
+import { get, post } from './request'
+import type { EventCard, EventDetail, PageData, SeatZone } from '@/types/common'
 
-/** 演出列表（支持筛选/搜索/排序） */
 export function getEventList(params: {
   categoryId?: number
   city?: string
   keyword?: string
+  dateStart?: string
+  dateEnd?: string
   sortBy?: string
   page?: number
   pageSize?: number
@@ -13,7 +14,18 @@ export function getEventList(params: {
   return get<PageData<EventCard>>('/event/list', params)
 }
 
-/** 演出详情 */
 export function getEventDetail(id: number): Promise<EventDetail> {
   return get<EventDetail>(`/event/${id}`)
+}
+
+export function getSeatMap(sessionId: number): Promise<SeatZone[]> {
+  return get<SeatZone[]>(`/event/session/${sessionId}/seats`)
+}
+
+export function lockSeats(sessionId: number, seatIds: number[]): Promise<{ lockExpireAt: string }> {
+  return post<{ lockExpireAt: string }>('/event/seat/lock', { sessionId, seatIds })
+}
+
+export function releaseSeats(sessionId: number, seatIds: number[]): Promise<void> {
+  return post<void>('/event/seat/release', { sessionId, seatIds })
 }

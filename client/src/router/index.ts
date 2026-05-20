@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('@/views/Home.vue'),
     },
     {
+      path: '/search',
+      name: 'search',
+      component: () => import('@/views/Search.vue'),
+    },
+    {
       path: '/event/:id',
       name: 'event-detail',
       component: () => import('@/views/EventDetail.vue'),
@@ -48,6 +53,17 @@ const router = createRouter({
       component: () => import('@/views/Register.vue'),
     },
   ],
+})
+
+router.beforeEach((to, _from, next) => {
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      next({ name: 'login', query: { redirect: to.fullPath } })
+      return
+    }
+  }
+  next()
 })
 
 export default router
