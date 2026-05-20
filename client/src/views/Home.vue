@@ -22,21 +22,23 @@
     <!-- 筛选栏 -->
     <section class="sticky top-16 z-40 border-b border-white/[0.05] bg-surface-950/80 backdrop-blur-lg">
       <div class="mx-auto max-w-7xl px-6 py-3">
-        <div class="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
-          <!-- 分类筛选 -->
-          <button
-            v-for="cat in categories"
-            :key="cat.id"
-            @click="activeCategory = activeCategory === cat.id ? null : cat.id"
-            :class="[
-              'whitespace-nowrap px-4 py-2 rounded-lg text-sm transition-all duration-200 shrink-0',
-              activeCategory === cat.id
-                ? 'bg-brand-500/20 text-brand-300 border border-brand-400/30'
-                : 'bg-white/[0.03] text-white/50 border border-white/[0.05] hover:text-white/80 hover:border-white/10'
-            ]"
-          >
-            {{ cat.name }}
-          </button>
+        <div class="flex items-center gap-3">
+          <!-- 分类筛选 (可横向滚动) -->
+          <div class="flex items-center gap-3 overflow-x-auto scrollbar-none">
+            <button
+              v-for="cat in categories"
+              :key="cat.id"
+              @click="activeCategory = activeCategory === cat.id ? null : cat.id"
+              :class="[
+                'whitespace-nowrap px-4 py-2 rounded-lg text-sm transition-all duration-200 shrink-0',
+                activeCategory === cat.id
+                  ? 'bg-brand-500/20 text-brand-300 border border-brand-400/30'
+                  : 'bg-white/[0.03] text-white/50 border border-white/[0.05] hover:text-white/80 hover:border-white/10'
+              ]"
+            >
+              {{ cat.name }}
+            </button>
+          </div>
 
           <div class="w-px h-6 bg-white/[0.08] shrink-0"></div>
 
