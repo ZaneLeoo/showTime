@@ -36,14 +36,62 @@
           <router-link to="/user/orders" class="text-sm text-white/60 hover:text-white transition-colors">
             我的票夹
           </router-link>
-          <div class="flex items-center gap-2 pl-3 border-l border-white/10">
-            <div class="w-7 h-7 rounded-full bg-brand-gradient flex items-center justify-center text-xs font-bold">
-              {{ auth.user?.nickname?.charAt(0) || auth.user?.phone?.charAt(0) || 'U' }}
-            </div>
-            <span class="text-sm text-white/70 hidden sm:block">
-              {{ auth.user?.nickname || auth.user?.phone || '用户' }}
-            </span>
-          </div>
+
+          <!-- 用户下拉 -->
+          <Menu as="div" class="relative">
+            <MenuButton class="flex items-center gap-2 pl-3 border-l border-white/10
+                               hover:opacity-80 transition-opacity cursor-pointer">
+              <div class="w-7 h-7 rounded-full bg-brand-gradient flex items-center justify-center text-xs font-bold text-white">
+                {{ auth.user?.nickname?.charAt(0) || auth.user?.phone?.charAt(0) || 'U' }}
+              </div>
+              <span class="text-sm text-white/70 hidden sm:block">
+                {{ auth.user?.nickname || auth.user?.phone || '用户' }}
+              </span>
+            </MenuButton>
+
+            <transition
+              enter-active-class="transition duration-150 ease-out"
+              enter-from-class="opacity-0 scale-95"
+              enter-to-class="opacity-100 scale-100"
+              leave-active-class="transition duration-100 ease-in"
+              leave-from-class="opacity-100 scale-100"
+              leave-to-class="opacity-0 scale-95"
+            >
+              <MenuItems
+                class="absolute top-full right-0 mt-2 w-40
+                       rounded-xl border border-white/[0.08]
+                       bg-surface-800/95 backdrop-blur-xl
+                       shadow-[0_12px_40px_rgba(0,0,0,0.5)]
+                       py-1 z-50 overflow-hidden focus:outline-none"
+              >
+                <MenuItem v-slot="{ active }">
+                  <router-link
+                    to="/user/orders"
+                    :class="[
+                      'block px-4 py-2.5 text-sm transition-colors duration-150',
+                      active ? 'text-brand-400 bg-brand-500/10' : 'text-white/70'
+                    ]"
+                  >
+                    我的票夹
+                  </router-link>
+                </MenuItem>
+
+                <div class="border-t border-white/[0.06] my-1"></div>
+
+                <MenuItem v-slot="{ active }">
+                  <button
+                    @click="handleLogout"
+                    :class="[
+                      'w-full text-left px-4 py-2.5 text-sm transition-colors duration-150',
+                      active ? 'text-red-400 bg-red-500/10' : 'text-white/50'
+                    ]"
+                  >
+                    退出登录
+                  </button>
+                </MenuItem>
+              </MenuItems>
+            </transition>
+          </Menu>
         </template>
         <template v-else>
           <router-link to="/login" class="btn-ghost text-sm !px-4 !py-2">登录</router-link>
@@ -60,6 +108,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -70,5 +119,10 @@ function doSearch() {
   if (kw) {
     router.push({ name: 'search', query: { keyword: kw } })
   }
+}
+
+function handleLogout() {
+  auth.clearToken()
+  router.push('/')
 }
 </script>
