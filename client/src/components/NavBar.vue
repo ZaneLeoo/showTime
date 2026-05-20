@@ -72,7 +72,7 @@
                       active ? 'text-brand-400 bg-brand-500/10' : 'text-white/70'
                     ]"
                   >
-                    我的票夹
+                    个人中心
                   </router-link>
                 </MenuItem>
 
