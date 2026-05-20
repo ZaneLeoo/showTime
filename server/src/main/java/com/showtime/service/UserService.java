@@ -95,7 +95,7 @@ public class UserService {
         if (req.getNickname() != null) user.setNickname(req.getNickname());
         if (req.getEmail() != null) {
             // 检查邮箱是否被他人占用
-            Integer exist = userMapper.selectCount(
+            Long exist = userMapper.selectCount(
                 new LambdaQueryWrapper<User>().eq(User::getEmail, req.getEmail()).ne(User::getId, userId)
             );
             if (exist > 0) {
