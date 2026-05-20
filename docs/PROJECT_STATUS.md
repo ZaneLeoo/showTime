@@ -1,7 +1,7 @@
 # ShowTime 项目进度
 
-> 最后更新时间：2026/05/19
-> 当前阶段：用户模块完成，明亮浅色主题上线
+> 最后更新时间：2026/05/20
+> 当前阶段：前端视觉打磨完成，即将进入后端演出/选座/订单模块开发
 
 ## 项目背景
 
@@ -38,7 +38,12 @@
 | Mapper 接口（12个） | ✅ 完成 |
 | 用户模块（后端） | ✅ 完成 |
 | 用户模块（前端） | ✅ 完成 |
-| 全局主题（明亮浅色） | ✅ 完成 |
+| C端前端界面（全部页面） | ✅ 完成 |
+| 前端视觉打磨 | ✅ 完成 |
+| 演出模块（后端） | ⬜ 下一步 |
+| 选座模块（后端） | ⬜ 待开发 |
+| 订单模块（后端） | ⬜ 待开发 |
+| 前后端联调 | ⬜ 待开发 |
 
 ---
 
@@ -69,20 +74,67 @@ MySQL-p/
 └── client/                         # Vue 3 前端
     ├── package.json
     ├── vite.config.ts
+    ├── tailwind.config.js
     └── src/
-        ├── api/     (request.ts, user.ts, event.ts)
-        ├── router/  (index.ts)
-        ├── stores/  (auth.ts)
-        ├── types/   (common.ts)
-        ├── views/   (Home/Login/Register已完成, 其余占位)
-        └── styles/  (main.css + Tailwind 明亮浅色主题)
+        ├── main.ts
+        ├── App.vue                  # 根组件（噪声纹理+网格+光晕背景）
+        ├── api/
+        │   ├── request.ts           # Axios 实例 + 拦截器
+        │   ├── user.ts              # 用户API（注册/登录/信息/更新）
+        │   ├── event.ts             # 演出API（列表/详情/座位图/锁定释放）
+        │   └── order.ts             # 订单API（创建/支付/取消/列表/详情）
+        ├── router/index.ts          # 9条路由 + 登录守卫
+        ├── stores/auth.ts           # Pinia 认证状态
+        ├── types/common.ts          # 全部 TS 类型定义
+        ├── styles/main.css          # Tailwind + 暗色主题全局样式
+        ├── components/
+        │   ├── NavBar.vue           # 导航栏（搜索+登录态+用户下拉菜单）
+        │   ├── EventCard.vue        # Netflix风格演出卡片（全幅海报+扫光+氛围光）
+        │   ├── SeatMap.vue          # 座位图（彩色区域+图例）
+        │   ├── LoadingSpinner.vue   # 加载动画
+        │   └── EmptyState.vue       # 空状态
+        └── views/
+            ├── Home.vue             # 首页（Hero+分类筛选+Headless UI排序下拉+演出网格）
+            ├── Search.vue           # 搜索页
+            ├── Login.vue            # 登录（氛围光晕+金色装饰线+图标输入框+加载态）
+            ├── Register.vue         # 注册（同设计语言+必填标记+注册后自动登录）
+            ├── EventDetail.vue      # 演出详情（场次+票档+选座入口）
+            ├── SeatSelect.vue       # 选座页（可视化座位图+锁定倒计时）
+            ├── OrderConfirm.vue     # 订单确认（座位明细+支付）
+            ├── OrderDetail.vue      # 订单详情（票务明细+支付信息）
+            └── MyOrders.vue         # 我的票夹（状态筛选+订单列表）
 ```
 
 ---
 
+## 设计主题
+
+- **"Midnight Stage"** — 暗色沉浸式主题
+- 品牌色：酒红 #8b1a2b（按钮/售罄/glow） + 旧金 #c9a84c（价格/在售/渐变）
+- 字体：Playfair Display（标题） + DM Sans / 思源黑体（正文）
+- 背景：SVG 噪声纹理 + 网格纹理 + 顶部酒红光晕
+- 按钮：纯色酒红（无渐变），hover 亮酒红 #a8324a
+- 卡片：Netflix 风格全幅海报 3:4，渐变遮罩文字，hover 扫光 + 氛围光
+- Logo/文字品牌标识：酒红→金渐变保留
+
+---
+
+## 前端近期改动
+
+- 品牌色：紫→粉 改为 酒红 #8b1a2b + 旧金 #c9a84c
+- 按钮：渐变改为纯色酒红，hover 亮酒红
+- EventCard：Netflix 风格重设计，3:4 全幅海报 + 扫光动画 + 氛围光按状态变色
+- 登录/注册：氛围光晕 + 金色装饰线 + 内嵌图标 + 加载 spinner
+- 排序下拉：原生 select → Headless UI Menu 组件
+- 用户菜单：头像下拉（个人中心 + 退出登录）
+- 认证：刷新恢复用户信息，路由守卫 requiresAuth，请求拦截器自动带 token
+- JDBC：修复 `characterEncoding=utf8mb4` → `UTF-8` 连接错误
+- Mock 数据：8 张真实演出海报图
+
 ## 下一步计划
 
-1. 实现演出模块 Service + Controller（列表/搜索/详情）
-2. 完善首页（搜索联动、分页、骨架屏）
-3. 实现选座模块（座位查询/锁定/释放）
-4. 实现订单模块（下单/支付/票夹）
+1. **演出模块后端** Service + Controller（列表/搜索/详情）—— 优先
+2. 选座模块 Service + Controller（座位查询/锁定/释放 + 事务行锁）
+3. 订单模块 Service + Controller（下单/支付/票夹）
+4. 前后端联调，接口对接
+5. 逐步添加索引，EXPLAIN 对比性能
