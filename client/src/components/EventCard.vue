@@ -12,7 +12,7 @@
              transition-all duration-700 ease-out
              hover:-translate-y-2
              hover:scale-[1.015]
-             hover:shadow-[0_30px_90px_rgba(255,107,107,0.18)]"
+             hover:shadow-[0_30px_90px_rgba(168,50,74,0.2)]"
     >
 
       <!-- 海报 -->
@@ -51,12 +51,12 @@
         <div
           class="absolute -bottom-16 left-1/2 -translate-x-1/2
                  w-64 h-64 rounded-full
-                 bg-accent-500/20
                  blur-3xl
                  opacity-70
                  transition-all duration-700
                  group-hover:scale-125
                  group-hover:opacity-100"
+          :class="glowClass"
         />
 
         <!-- 扫光 -->
@@ -260,7 +260,7 @@ const statusMap: Record<number, { text: string; class: string }> = {
   },
   2: {
     text: '已售罄',
-    class: 'bg-rose-500/15 border-rose-400/30 text-rose-200'
+    class: 'bg-brand-500/15 border-brand-400/30 text-brand-200'
   },
   3: {
     text: '已结束',
@@ -274,6 +274,12 @@ const statusText = computed(() => {
 
 const statusBadgeClass = computed(() => {
   return statusMap[props.event.status]?.class || ''
+})
+
+const glowClass = computed(() => {
+  if (props.event.status === 2) return 'bg-brand-500/15'
+  if (props.event.status === 3) return 'bg-white/[0.02]'
+  return 'bg-accent-500/20'
 })
 
 function onImgError(e: Event) {
