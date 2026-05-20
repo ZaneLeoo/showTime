@@ -41,8 +41,8 @@
           <div class="w-px h-6 bg-white/[0.08] shrink-0"></div>
 
           <!-- 排序 -->
-          <Listbox v-model="sortBy" as="div" class="relative shrink-0">
-            <ListboxButton
+          <Menu as="div" class="relative shrink-0">
+            <MenuButton
               class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm
                      bg-white/[0.03] border border-white/[0.05] text-white/60
                      hover:text-white/80 hover:border-white/10
@@ -55,40 +55,43 @@
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
-            </ListboxButton>
+            </MenuButton>
 
             <transition
+              enter-active-class="transition duration-150 ease-out"
+              enter-from-class="opacity-0 scale-95"
+              enter-to-class="opacity-100 scale-100"
               leave-active-class="transition duration-100 ease-in"
               leave-from-class="opacity-100 scale-100"
               leave-to-class="opacity-0 scale-95"
             >
-              <ListboxOptions
+              <MenuItems
                 class="absolute top-full right-0 mt-1.5 w-28
                        rounded-xl border border-white/[0.08]
                        bg-surface-800/95 backdrop-blur-xl
                        shadow-[0_12px_40px_rgba(0,0,0,0.5)]
                        py-1 z-50 overflow-hidden focus:outline-none"
               >
-                <ListboxOption
+                <MenuItem
                   v-for="opt in sortOptions"
                   :key="opt.value"
-                  :value="opt.value"
-                  v-slot="{ active, selected }"
+                  v-slot="{ active }"
                 >
-                  <li
+                  <button
+                    @click="sortBy = opt.value"
                     :class="[
-                      'px-4 py-2.5 text-sm transition-colors duration-150 cursor-pointer',
-                      active || selected
+                      'w-full text-left px-4 py-2.5 text-sm transition-colors duration-150',
+                      active
                         ? 'text-brand-400 bg-brand-500/10'
                         : 'text-white/55 hover:text-white/85 hover:bg-white/[0.04]'
                     ]"
                   >
                     {{ opt.label }}
-                  </li>
-                </ListboxOption>
-              </ListboxOptions>
+                  </button>
+                </MenuItem>
+              </MenuItems>
             </transition>
-          </Listbox>
+          </Menu>
         </div>
       </div>
     </section>
@@ -138,7 +141,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from 'vue'
-import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { getEventList } from '@/api/event'
 import type { EventCard as EventCardType, Category } from '@/types/common'
 import EventCard from '@/components/EventCard.vue'
