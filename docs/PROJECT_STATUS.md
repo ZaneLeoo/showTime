@@ -1,7 +1,7 @@
 # ShowTime 项目进度
 
-> 最后更新时间：2026/05/20
-> 当前阶段：前端视觉打磨完成，即将进入后端演出/选座/订单模块开发
+> 最后更新时间：2026/05/25
+> 当前阶段：演出模块后端完成 + Mock数据就绪，即将进入订单模块开发
 
 ## 项目背景
 
@@ -40,9 +40,11 @@
 | 用户模块（前端） | ✅ 完成 |
 | C端前端界面（全部页面） | ✅ 完成 |
 | 前端视觉打磨 | ✅ 完成 |
-| 演出模块（后端） | ⬜ 下一步 |
-| 选座模块（后端） | ⬜ 待开发 |
-| 订单模块（后端） | ⬜ 待开发 |
+| 演出模块（后端） | ✅ 完成（list/detail） |
+| 选座模块（后端） | ✅ 完成（seatMap/lock/release） |
+| 订单模块（后端） | ⬜ 下一步 |
+| Mock 数据 | ✅ 完成（12演出/33场次/6814座位） |
+| 海报图片 | ✅ 完成（12张600x800） |
 | 前后端联调 | ⬜ 待开发 |
 
 ---
@@ -131,10 +133,46 @@ MySQL-p/
 - JDBC：修复 `characterEncoding=utf8mb4` → `UTF-8` 连接错误
 - Mock 数据：8 张真实演出海报图
 
+## 当前后端 API
+
+### 用户模块
+| 端点 | 说明 |
+|------|------|
+| `POST /api/user/register` | 注册 |
+| `POST /api/user/login` | 登录 |
+| `GET /api/user/info` | 获取当前用户信息 |
+| `PUT /api/user/profile` | 更新个人信息 |
+
+### 演出模块
+| 端点 | 说明 |
+|------|------|
+| `GET /api/event/list` | 演出列表（分页+筛选+排序） |
+| `GET /api/event/{id}` | 演出详情（含场地+场次+票档） |
+| `GET /api/event/session/{sessionId}/seats` | 座位图（按区域分组） |
+| `POST /api/event/seat/lock` | 锁定座位（需登录，15分钟过期） |
+| `POST /api/event/seat/release` | 释放座位（需登录） |
+
+## Mock 数据
+
+| 表 | 记录数 |
+|----|--------|
+| categories | 8（演唱会/音乐会/话剧/音乐剧/舞蹈/戏曲/儿童剧/脱口秀） |
+| venues | 6（北京鸟巢/上海梅奔/广州大剧院/深圳湾/成都金融城/蜂巢剧场） |
+| events | 12（9在售/2售罄/2即将开售） |
+| event_sessions | 33 |
+| seats | 6814（VIP/A/B/C 四区） |
+
+海报图片：`client/public/images/posters/*.jpg`（12张，600×800，Unsplash）
+
+## 开发环境
+
+- WSL2: Java 17 + Maven 3.8.7（编译/测试用）
+- Windows: MySQL 8.0 + 后端运行
+- WSL2 → Windows MySQL: `mysql -h DESKTOP-IPV3AHQ.local`
+- Git SSH: 已配置 `~/.ssh/config` 走 443 端口
+
 ## 下一步计划
 
-1. **演出模块后端** Service + Controller（列表/搜索/详情）—— 优先
-2. 选座模块 Service + Controller（座位查询/锁定/释放 + 事务行锁）
-3. 订单模块 Service + Controller（下单/支付/票夹）
-4. 前后端联调，接口对接
-5. 逐步添加索引，EXPLAIN 对比性能
+1. **订单模块后端** Service + Controller（下单/支付/取消/票夹）—— 优先
+2. 前后端联调，接口对接
+3. 逐步添加索引，EXPLAIN 对比性能
