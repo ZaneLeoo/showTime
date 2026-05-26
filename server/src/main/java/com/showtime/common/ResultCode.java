@@ -31,6 +31,8 @@ public enum ResultCode {
     LOCK_TIMEOUT(4022, "选座超时，请重新选择"),
     ORDER_NOT_FOUND(4030, "订单不存在"),
     ORDER_CANNOT_PAY(4031, "该订单无法支付"),
+    ORDER_CANNOT_CANCEL(4033, "该订单无法取消"),
+    PAYMENT_FAILED(4040, "支付失败"),
 
     // ==================== 服务端错误 5xxx ====================
     INTERNAL_ERROR(5000, "服务器内部错误"),

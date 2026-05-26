@@ -54,6 +54,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Knife4j API 文档（基于 springdoc-openapi，中文支持更好） -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
         <!-- BCrypt -->
         <dependency>
             <groupId>org.springframework.security</groupId>
