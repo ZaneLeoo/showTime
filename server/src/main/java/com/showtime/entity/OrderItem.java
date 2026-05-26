@@ -15,11 +15,15 @@ public class OrderItem {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    /** 所属订单 */
     private Integer orderId;
 
+    /** 座位ID */
     private Integer seatId;
 
+    /** 实际售价 */
     private BigDecimal price;
 
+    /** 创建时间 */
     private LocalDateTime createdAt;
 }

@@ -14,11 +14,15 @@ public class UserSession {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    /** 用户ID */
     private Integer userId;
 
+    /** 会话令牌 */
     private String token;
 
+    /** 过期时间 */
     private LocalDateTime expiresAt;
 
+    /** 创建时间 */
     private LocalDateTime createdAt;
 }
