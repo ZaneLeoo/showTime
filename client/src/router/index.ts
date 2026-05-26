@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -76,16 +77,18 @@ router.beforeEach(async (to, _from, next) => {
       return
     }
     if (to.meta.requiresAdmin) {
-      try {
-        const { useAuthStore } = await import('@/stores/auth')
-        const auth = useAuthStore()
-        if (!auth.user) await auth.fetchUser()
-        if (!auth.isAdmin) {
-          next({ name: 'home' })
+      const auth = useAuthStore()
+      // login 已调过 fetchUser，此处仅做兜底
+      if (!auth.user) {
+        try {
+          await auth.fetchUser()
+        } catch {
+          next({ name: 'login' })
           return
         }
-      } catch {
-        next({ name: 'login' })
+      }
+      if (!auth.isAdmin) {
+        next({ name: 'home' })
         return
       }
     }
