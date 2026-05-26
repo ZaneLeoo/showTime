@@ -3,12 +3,11 @@ package com.showtime.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Schema(description = "用户登录会话（重启丢失）")
+/** 用户登录会话（Memory 引擎，重启丢失） */
 @Data
 @TableName("user_sessions")
 public class UserSession {
@@ -16,15 +15,15 @@ public class UserSession {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "用户ID")
+    /** 用户ID */
     private Integer userId;
 
-    @Schema(description = "会话令牌")
+    /** 会话令牌 */
     private String token;
 
-    @Schema(description = "过期时间")
+    /** 过期时间 */
     private LocalDateTime expiresAt;
 
-    @Schema(description = "创建时间")
+    /** 创建时间 */
     private LocalDateTime createdAt;
 }
