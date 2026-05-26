@@ -69,28 +69,19 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach(async (to, _from, next) => {
+router.beforeEach((to, _from, next) => {
   if (to.meta.requiresAuth || to.meta.requiresAdmin) {
     const token = localStorage.getItem('token')
     if (!token) {
       next({ name: 'login', query: { redirect: to.fullPath } })
       return
     }
-    if (to.meta.requiresAdmin) {
-      const auth = useAuthStore()
-      // login 已调过 fetchUser，此处仅做兜底
-      if (!auth.user) {
-        try {
-          await auth.fetchUser()
-        } catch {
-          next({ name: 'login' })
-          return
-        }
-      }
-      if (!auth.isAdmin) {
-        next({ name: 'home' })
-        return
-      }
+  }
+  if (to.meta.requiresAdmin) {
+    const auth = useAuthStore()
+    if (!auth.isAdmin) {
+      next({ name: 'home' })
+      return
     }
   }
   next()

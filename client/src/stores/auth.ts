@@ -8,6 +8,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<UserInfo | null>(null)
 
   const isLoggedIn = computed(() => !!token.value)
+  const isAdmin = computed(() => user.value?.role === 'admin')
 
   function setToken(t: string) {
     token.value = t
@@ -25,9 +26,9 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       user.value = await getUserInfo()
     } catch {
-      clearToken()
+      // 网络或服务端临时故障不删 token，下次导航重试
     }
   }
 
-  return { token, user, isLoggedIn, setToken, clearToken, fetchUser }
+  return { token, user, isLoggedIn, isAdmin, setToken, clearToken, fetchUser }
 })
