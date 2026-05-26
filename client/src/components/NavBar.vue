@@ -76,6 +76,18 @@
                   </router-link>
                 </MenuItem>
 
+                <MenuItem v-if="auth.isAdmin" v-slot="{ active }">
+                  <router-link
+                    to="/admin/dashboard"
+                    :class="[
+                      'block px-4 py-2.5 text-sm transition-colors duration-150',
+                      active ? 'text-accent-400 bg-accent-500/10' : 'text-white/70'
+                    ]"
+                  >
+                    管理后台
+                  </router-link>
+                </MenuItem>
+
                 <div class="border-t border-white/[0.06] my-1"></div>
 
                 <MenuItem v-slot="{ active }">

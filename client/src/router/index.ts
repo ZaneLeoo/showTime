@@ -52,15 +52,42 @@ const router = createRouter({
       name: 'register',
       component: () => import('@/views/Register.vue'),
     },
+    {
+      path: '/admin',
+      component: () => import('@/views/admin/AdminLayout.vue'),
+      meta: { requiresAuth: true, requiresAdmin: true },
+      children: [
+        { path: '', redirect: '/admin/dashboard' },
+        { path: 'dashboard', name: 'admin-dashboard', component: () => import('@/views/admin/Dashboard.vue') },
+        { path: 'events', name: 'admin-events', component: () => import('@/views/admin/EventList.vue') },
+        { path: 'events/:id', name: 'admin-event-edit', component: () => import('@/views/admin/EventEdit.vue') },
+        { path: 'venues', name: 'admin-venues', component: () => import('@/views/admin/VenueList.vue') },
+        { path: 'reports', name: 'admin-reports', component: () => import('@/views/admin/Report.vue') },
+      ],
+    },
   ],
 })
 
-router.beforeEach((to, _from, next) => {
-  if (to.meta.requiresAuth) {
+router.beforeEach(async (to, _from, next) => {
+  if (to.meta.requiresAuth || to.meta.requiresAdmin) {
     const token = localStorage.getItem('token')
     if (!token) {
       next({ name: 'login', query: { redirect: to.fullPath } })
       return
+    }
+    if (to.meta.requiresAdmin) {
+      try {
+        const { useAuthStore } = await import('@/stores/auth')
+        const auth = useAuthStore()
+        if (!auth.user) await auth.fetchUser()
+        if (!auth.isAdmin) {
+          next({ name: 'home' })
+          return
+        }
+      } catch {
+        next({ name: 'login' })
+        return
+      }
     }
   }
   next()
