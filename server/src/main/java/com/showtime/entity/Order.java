@@ -9,6 +9,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Schema(description = "订单")
 @Data
 @TableName("orders")
 public class Order {

@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "审计日志")
 @Data
 @TableName("audit_log")
 public class AuditLog {

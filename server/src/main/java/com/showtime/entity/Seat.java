@@ -9,6 +9,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Schema(description = "座位（行锁核心表）")
 @Data
 @TableName("seats")
 public class Seat {

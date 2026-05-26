@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "用户登录会话（重启丢失）")
 @Data
 @TableName("user_sessions")
 public class UserSession {

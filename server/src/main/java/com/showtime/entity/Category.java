@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "演出分类")
 @Data
 @TableName("categories")
 public class Category {

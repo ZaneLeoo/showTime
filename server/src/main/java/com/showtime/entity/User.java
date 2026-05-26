@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "用户")
 @Data
 @TableName("users")
 public class User {

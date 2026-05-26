@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "搜索日志")
 @Data
 @TableName("search_logs")
 public class SearchLog {

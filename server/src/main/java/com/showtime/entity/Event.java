@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "演出")
 @Data
 @TableName("events")
 public class Event {
