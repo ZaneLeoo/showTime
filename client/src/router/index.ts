@@ -70,9 +70,23 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
+  // Admin 路由诊断日志
+  if (to.path.startsWith('/admin')) {
+    console.log('[guard] to:', to.path, 'meta:', to.meta)
+    const t = localStorage.getItem('token')
+    console.log('[guard] token:', t ? t.substring(0, 20) + '...' : null)
+    try {
+      const auth = useAuthStore()
+      console.log('[guard] user:', auth.user, 'isAdmin:', auth.isAdmin)
+    } catch (e) {
+      console.error('[guard] useAuthStore failed:', e)
+    }
+  }
+
   if (to.meta.requiresAuth || to.meta.requiresAdmin) {
     const token = localStorage.getItem('token')
     if (!token) {
+      console.log('[guard] no token → login')
       next({ name: 'login', query: { redirect: to.fullPath } })
       return
     }
@@ -80,6 +94,7 @@ router.beforeEach((to, _from, next) => {
   if (to.meta.requiresAdmin) {
     const auth = useAuthStore()
     if (!auth.isAdmin) {
+      console.log('[guard] not admin → home')
       next({ name: 'home' })
       return
     }
