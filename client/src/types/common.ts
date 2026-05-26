@@ -44,6 +44,7 @@ export interface UserInfo {
   email?: string
   nickname?: string
   avatarUrl?: string
+  role: string
 }
 
 // ==================== 分类相关 ====================
@@ -190,4 +191,74 @@ export interface OrderPreview {
   }>
   totalPrice: number
   seatCount: number
+}
+
+// ==================== Admin 管理后台 ====================
+
+export interface AdminEventCard {
+  id: number
+  title: string
+  posterUrl: string
+  duration: number
+  categoryName: string
+  venueName: string
+  status: number
+  createdAt: string
+}
+
+export interface AdminEventReq {
+  title: string
+  description?: string
+  posterUrl?: string
+  duration?: number
+  categoryId: number
+  venueId: number
+  status?: number
+}
+
+export interface ZoneConfig {
+  name: string
+  price: number
+  rows: number
+  cols: number
+}
+
+export interface AdminSessionReq {
+  sessionTime: string
+  status?: number
+  zones: ZoneConfig[]
+}
+
+export interface AdminSession {
+  id: number
+  eventId: number
+  sessionTime: string
+  status: number
+  createdAt: string
+}
+
+export interface AdminVenueReq {
+  name: string
+  city: string
+  address: string
+  description?: string
+}
+
+export interface AdminDashboard {
+  todayOrderCount: number
+  todayRevenue: number
+  todayNewUsers: number
+  activeEventCount: number
+  recentOrders: Array<{
+    orderNo: string
+    eventTitle: string
+    amount: number
+    status: string
+    createdAt: string
+  }>
+  topEvents: Array<{
+    eventTitle: string
+    ticketCount: number
+    revenue: number
+  }>
 }
