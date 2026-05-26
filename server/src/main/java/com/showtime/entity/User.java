@@ -3,6 +3,7 @@ package com.showtime.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,27 +15,27 @@ public class User {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    /** 手机号 */
+    @Schema(description = "手机号")
     private String phone;
 
-    /** 邮箱 */
+    @Schema(description = "邮箱")
     private String email;
 
-    /** 密码哈希 */
+    @Schema(description = "密码哈希")
     private String passwordHash;
 
-    /** 昵称 */
+    @Schema(description = "昵称")
     private String nickname;
 
-    /** 头像URL */
+    @Schema(description = "头像URL")
     private String avatarUrl;
 
-    /** 状态：0=禁用 1=正常 */
+    @Schema(description = "状态：0=禁用 1=正常")
     private Integer status;
 
-    /** 创建时间 */
+    @Schema(description = "创建时间")
     private LocalDateTime createdAt;
 
-    /** 更新时间 */
+    @Schema(description = "更新时间")
     private LocalDateTime updatedAt;
 }

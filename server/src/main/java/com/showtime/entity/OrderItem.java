@@ -3,6 +3,7 @@ package com.showtime.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -15,15 +16,15 @@ public class OrderItem {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    /** 所属订单 */
+    @Schema(description = "所属订单")
     private Integer orderId;
 
-    /** 座位ID */
+    @Schema(description = "座位ID")
     private Integer seatId;
 
-    /** 实际售价 */
+    @Schema(description = "实际售价")
     private BigDecimal price;
 
-    /** 创建时间 */
+    @Schema(description = "创建时间")
     private LocalDateTime createdAt;
 }

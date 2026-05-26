@@ -3,6 +3,7 @@ package com.showtime.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,15 +15,15 @@ public class Category {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    /** 分类名称 */
+    @Schema(description = "分类名称")
     private String name;
 
-    /** 父分类ID（自关联，支持二级分类） */
+    @Schema(description = "父分类ID（自关联，支持二级分类）")
     private Integer parentId;
 
-    /** 排序号 */
+    @Schema(description = "排序号")
     private Integer sortOrder;
 
-    /** 创建时间 */
+    @Schema(description = "创建时间")
     private LocalDateTime createdAt;
 }

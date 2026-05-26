@@ -3,6 +3,7 @@ package com.showtime.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,21 +15,21 @@ public class Venue {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    /** 场馆名称 */
+    @Schema(description = "场馆名称")
     private String name;
 
-    /** 所在城市 */
+    @Schema(description = "所在城市")
     private String city;
 
-    /** 详细地址 */
+    @Schema(description = "详细地址")
     private String address;
 
-    /** 场馆介绍 */
+    @Schema(description = "场馆介绍")
     private String description;
 
-    /** 创建时间 */
+    @Schema(description = "创建时间")
     private LocalDateTime createdAt;
 
-    /** 更新时间 */
+    @Schema(description = "更新时间")
     private LocalDateTime updatedAt;
 }

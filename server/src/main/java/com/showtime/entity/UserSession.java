@@ -3,6 +3,7 @@ package com.showtime.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,15 +15,15 @@ public class UserSession {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    /** 用户ID */
+    @Schema(description = "用户ID")
     private Integer userId;
 
-    /** 会话令牌 */
+    @Schema(description = "会话令牌")
     private String token;
 
-    /** 过期时间 */
+    @Schema(description = "过期时间")
     private LocalDateTime expiresAt;
 
-    /** 创建时间 */
+    @Schema(description = "创建时间")
     private LocalDateTime createdAt;
 }
