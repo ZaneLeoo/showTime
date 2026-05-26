@@ -36,6 +36,7 @@ public class SessionService {
         if (user == null || user.getStatus() == 0) {
             throw new BizException(ResultCode.UNAUTHORIZED);
         }
+        request.setAttribute("userId", user.getId());
         return user;
     }
 
