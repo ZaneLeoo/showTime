@@ -71,10 +71,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { createOrder, payOrder } from '@/api/order'
+import { getOrderPreview, createOrder, payOrder } from '@/api/order'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import type { OrderPreview } from '@/types/common'
 
 const route = useRoute()
 const router = useRouter()
@@ -82,23 +83,24 @@ const router = useRouter()
 const sessionId = Number(route.query.sessionId)
 const seatIdList = (route.query.seatIds as string || '').split(',').map(Number)
 
-const loading = ref(false)
+const loading = ref(true)
 const submitting = ref(false)
+const preview = ref<OrderPreview | null>(null)
 
-// 模拟数据 — 后续从接口获取座位详情
-const totalPrice = computed(() => seats.value.reduce((s, seat) => s + seat.price, 0))
+const eventInfo = computed(() => preview.value?.eventInfo ?? { title: '', posterUrl: '', sessionTime: '', venueName: '' })
+const seats = computed(() => preview.value?.seats ?? [])
+const totalPrice = computed(() => preview.value?.totalPrice ?? 0)
 
-const eventInfo = ref({
-  title: '周杰伦2026巡回演唱会·北京站',
-  posterUrl: '/img/concertImage/5e953e3f51aa65c5d81cbb542a790ac0.jpg',
-  sessionTime: '2026-06-20 19:30',
-  venueName: '鸟巢文化中心',
+onMounted(async () => {
+  try {
+    preview.value = await getOrderPreview(sessionId, seatIdList)
+  } catch (e: any) {
+    alert(e.message || '加载订单信息失败')
+    router.back()
+  } finally {
+    loading.value = false
+  }
 })
-
-const seats = ref<Array<{ id: number; zoneName: string; seatRow: string; seatCol: number; price: number }>>([
-  { id: seatIdList[0] || 1, zoneName: 'VIP区', seatRow: 'A', seatCol: 5, price: 1680 },
-  { id: seatIdList[1] || 2, zoneName: 'VIP区', seatRow: 'A', seatCol: 6, price: 1680 },
-])
 
 async function submitOrder() {
   submitting.value = true

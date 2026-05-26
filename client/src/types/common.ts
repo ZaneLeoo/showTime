@@ -173,3 +173,21 @@ export interface CreateOrderReq {
   sessionId: number
   seatIds: number[]
 }
+
+export interface OrderPreview {
+  eventInfo: {
+    title: string
+    posterUrl: string
+    sessionTime: string
+    venueName: string
+  }
+  seats: Array<{
+    id: number
+    zoneName: string
+    seatRow: string
+    seatCol: number
+    price: number
+  }>
+  totalPrice: number
+  seatCount: number
+}

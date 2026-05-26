@@ -1,5 +1,9 @@
 import { get, post } from './request'
-import type { CreateOrderReq, OrderCard, OrderDetail, PageData } from '@/types/common'
+import type { CreateOrderReq, OrderCard, OrderDetail, OrderPreview, PageData } from '@/types/common'
+
+export function getOrderPreview(sessionId: number, seatIds: number[]): Promise<OrderPreview> {
+  return get<OrderPreview>('/order/preview', { sessionId, seatIds: seatIds.join(',') })
+}
 
 export function createOrder(data: CreateOrderReq): Promise<{ orderId: number; orderNo: string }> {
   return post<{ orderId: number; orderNo: string }>('/order/create', data)

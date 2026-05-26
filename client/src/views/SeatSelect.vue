@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import { getSeatMap, lockSeats, releaseSeats } from '@/api/event'
 import type { SeatInfo, SeatZone } from '@/types/common'
 import SeatMap from '@/components/SeatMap.vue'
@@ -83,12 +83,18 @@ function updateRemain() {
 
 onMounted(() => fetchSeatMap())
 
-onUnmounted(() => {
+onBeforeRouteLeave((_to, _from, next) => {
   if (lockTimer.value) clearInterval(lockTimer.value)
-  // 离开页面释放座位
-  if (selectedSeats.value.length > 0) {
+  // 跳转到订单确认页时不释放座位
+  if (_to.name !== 'order-confirm' && selectedSeats.value.length > 0) {
     releaseSeats(sessionId.value, selectedSeats.value.map(s => s.id)).catch(() => {})
   }
+  next()
+})
+
+// 兜底：浏览器关闭/刷新时尝试释放
+onUnmounted(() => {
+  if (lockTimer.value) clearInterval(lockTimer.value)
 })
 
 async function fetchSeatMap() {
